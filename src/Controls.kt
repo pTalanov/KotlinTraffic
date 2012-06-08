@@ -1,7 +1,7 @@
 package traffic
 
 
-class Image(val src: String, override var pos: Vector, var imageSize: Vector): Shape() {
+class Controls(val src: String, override var pos: Vector, val imageSize: Vector): Shape() {
     override fun draw(state: CanvasState) {
         state.context.drawImage(loadImage(src), 0, 0,
                 imageSize.x, imageSize.y,

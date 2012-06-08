@@ -13,5 +13,4 @@ class Border(): Shape() {
         state.context.lineWidth = 4.0
         state.context.strokeRect(0, 0, state.width, state.height)
     }
-
 }

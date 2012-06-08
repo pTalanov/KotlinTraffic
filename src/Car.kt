@@ -3,29 +3,29 @@ package traffic
 class Car(override var pos: Vector, val direction: String, val color: String): Shape() {
     val imageSize = v(25.0, 59.0)
     var speed = getRandomArbitary(2, 10);
+    val image = loadImage(PATH_TO_IMAGES + color + "_car.png")
 
     override fun draw(state: CanvasState) {
         if (direction == "up" || direction == "down") {
-            state.context.drawImage(loadImage(PATH_TO_IMAGES + color + "_car.png"), 0, 0,
+            state.context.drawImage(image, 0, 0,
                     imageSize.x, imageSize.y,
                     pos.x, pos.y,
-                    imageSize.x, imageSize.y.toInt())
-            if ((!isNearStopLine()) || (state.trafficLightUp.canMove() && isNearStopLine()) ) {
-                move()
-            } else {
-                speed = getRandomArbitary(2, 10)
-            }
+                    imageSize.x, imageSize.y)
+            tryMove(state.trafficLightUp)
         } else {
-            state.context.drawImage(loadImage(PATH_TO_IMAGES + color + "_car.png"), 0, 0,
-                    imageSize.y.toInt(), imageSize.x.toInt(),
-                    pos.x.toInt(), pos.y.toInt(),
-                    imageSize.y.toInt(), imageSize.x.toInt())
-            if ((!isNearStopLine()) || (state.trafficLightLeft.canMove() && isNearStopLine()) ) {
-                move()
-            } else {
-                speed = getRandomArbitary(2, 10)
-            }
+            state.context.drawImage(image, 0, 0,
+                    imageSize.y, imageSize.x,
+                    pos.x, pos.y,
+                    imageSize.y, imageSize.x)
+           tryMove(state.trafficLightLeft)
+        }
+    }
 
+    fun tryMove(lightToCheck: TrafficLight) {
+        if ((!isNearStopLine()) || (lightToCheck.canMove() && isNearStopLine()) ) {
+            move()
+        } else {
+            speed = getRandomArbitary(2, 10)
         }
 
     }

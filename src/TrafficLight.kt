@@ -7,11 +7,10 @@ class TrafficLight(override var pos: Vector, val direction: String, val startCol
     val red = TrafficLightItem(v(pos.x, pos.y), PATH_TO_IMAGES + "red_color.png")
     val yellow = TrafficLightItem(v(pos.x, pos.y), PATH_TO_IMAGES + "yellow_color.png")
     val green = TrafficLightItem(v(pos.x, pos.y), PATH_TO_IMAGES + "green_color.png")
-    val flashingGreen = TrafficLightItem(v(pos.x, pos.y), PATH_TO_IMAGES + "green_color_flash.png")
+    val flashingGreen = FlashingTrafficLightItem(v(pos.x, pos.y), PATH_TO_IMAGES + "green_color.png")
     var size = Vector(27.0, 34.0);
     var timer = Timer(Vector(pos.x + 6, pos.y + 12))
     var currentColor = startColor;
-    var isForceColorChange = false
     var changeColorForward = (startColor == "red")
 
     override fun draw(state: CanvasState) {
@@ -27,40 +26,42 @@ class TrafficLight(override var pos: Vector, val direction: String, val startCol
     }
 
     fun setRed() {
-        if (currentColor != "red" && currentColor != "yellow" && currentColor != "green_flash") {
-            isForceColorChange = true
-            changeColor()
+        if (currentColor == "green") {
+            changeColor(true)
         }
     }
 
     fun setGreen() {
-        if (currentColor != "green" && currentColor != "green_flash" && currentColor != "yellow") {
-            isForceColorChange = true
-            changeColor()
+        if (currentColor == "red") {
+            changeColor(true)
         }
     }
 
-    fun changeColor() {
-        if (changeColorForward) changeColorForward() else changeColorBackward()
+    fun changeColor(forced: Boolean = false) {
+        if (changeColorForward) changeColorForward(forced) else changeColorBackward(forced)
     }
 
-    fun changeColorForward() {
+    fun changeColorForward(forced: Boolean) {
         changeColorForward = false
         currentColor = "yellow"
         window.setTimeout({
-            if (!isForceColorChange) timer.resetTimer() else isForceColorChange = false
+            if (!forced) {
+                timer.resetTimer()
+            }
             currentColor = "green"
         }, 3000)
     }
 
 
-    fun changeColorBackward() {
+    fun changeColorBackward(forced: Boolean) {
         changeColorForward = true
         currentColor = "green_flash"
         window.setTimeout({
             currentColor = "yellow"
             window.setTimeout({
-                if (!isForceColorChange) timer.resetTimer() else isForceColorChange = false
+                if (!forced) {
+                    timer.resetTimer()
+                }
                 currentColor = "red"
             }, 1000)
         }, 2000)
