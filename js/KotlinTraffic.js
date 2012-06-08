@@ -70,7 +70,58 @@
       this.$pos_0 = tmp$0;
     }
     });
-    var tmp$2 = Kotlin.createClass(tmp$1, {initialize:function(pos, direction, color){
+    var tmp$2 = Kotlin.createClass(tmp$1, {initialize:function(pos){
+      this.$pos = pos;
+      this.super_init();
+      this.$relSize = 0.8;
+      this.$imageSize = traffic.v(420, 323);
+      this.$size = this.get_imageSize().times(this.get_relSize());
+    }
+    , get_pos:function(){
+      return this.$pos;
+    }
+    , set_pos:function(tmp$0){
+      this.$pos = tmp$0;
+    }
+    , get_relSize:function(){
+      return this.$relSize;
+    }
+    , get_imageSize:function(){
+      return this.$imageSize;
+    }
+    , get_size:function(){
+      return this.$size;
+    }
+    , draw:function(state){
+      {
+        state.get_context().drawImage(traffic.loadImage(traffic.get_PATH_TO_IMAGES() + 'crossroads.jpg'), 0, 0, this.get_imageSize().get_x(), this.get_imageSize().get_y(), this.get_pos().get_x(), this.get_pos().get_y(), this.get_size().get_x(), this.get_size().get_y());
+      }
+    }
+    });
+    var tmp$3 = Kotlin.createClass(tmp$1, {initialize:function(){
+      this.super_init();
+      this.$pos = new traffic.Vector(4, 4);
+    }
+    , get_pos:function(){
+      return this.$pos;
+    }
+    , set_pos:function(tmp$0){
+      this.$pos = tmp$0;
+    }
+    , draw:function(state){
+      {
+        state.get_context().fillStyle = traffic.get_Colors().get_white();
+        state.get_context().fillRect(2, 4, 10, 292);
+        state.get_context().fillRect(330, 4, 370, 292);
+        state.get_context().fillRect(2, 2, 330, 10);
+        state.get_context().fillRect(4, 265, 340, 380);
+        state.get_context().strokeStyle = traffic.get_Colors().get_black();
+        state.get_context().lineWidth = 4;
+        state.get_context().strokeRect(0, 0, state.get_width(), state.get_height());
+      }
+    }
+    });
+    var tmp$4 = Kotlin.createClass(tmp$1, {initialize:function(pos, direction, color){
       this.$pos = pos;
       this.$direction = direction;
       this.$color = color;
@@ -203,156 +254,7 @@
       }
     }
     });
-    var tmp$3 = Kotlin.createClass(tmp$1, {initialize:function(){
-      this.super_init();
-      this.$pos = new traffic.Vector(4, 4);
-    }
-    , get_pos:function(){
-      return this.$pos;
-    }
-    , set_pos:function(tmp$0){
-      this.$pos = tmp$0;
-    }
-    , draw:function(state){
-      {
-        state.get_context().fillStyle = traffic.get_Colors().get_white();
-        state.get_context().fillRect(2, 4, 10, 292);
-        state.get_context().fillRect(330, 4, 370, 292);
-        state.get_context().fillRect(2, 2, 330, 10);
-        state.get_context().fillRect(4, 265, 340, 380);
-        state.get_context().strokeStyle = traffic.get_Colors().get_black();
-        state.get_context().lineWidth = 4;
-        state.get_context().strokeRect(0, 0, state.get_width(), state.get_height());
-      }
-    }
-    });
-    var tmp$4 = Kotlin.createClass(tmp$1, {initialize:function(pos, imageSrc){
-      this.$pos = pos;
-      this.$imageSrc = imageSrc;
-      this.super_init();
-      this.$relSize = 0.5;
-      this.$imageSize = traffic.v(33, 33);
-      this.$size = this.get_imageSize().times(this.get_relSize());
-      this.$image = traffic.loadImage(this.get_imageSrc());
-    }
-    , get_pos:function(){
-      return this.$pos;
-    }
-    , set_pos:function(tmp$0){
-      this.$pos = tmp$0;
-    }
-    , get_imageSrc:function(){
-      return this.$imageSrc;
-    }
-    , get_relSize:function(){
-      return this.$relSize;
-    }
-    , get_imageSize:function(){
-      return this.$imageSize;
-    }
-    , get_size:function(){
-      return this.$size;
-    }
-    , get_image:function(){
-      return this.$image;
-    }
-    , draw:function(state){
-      {
-        this.drawImage(state, this.get_image());
-      }
-    }
-    , drawImage:function(state, image){
-      {
-        state.get_context().drawImage(image, 0, 0, this.get_imageSize().get_x(), this.get_imageSize().get_y(), this.get_pos().get_x(), this.get_pos().get_y(), this.get_size().get_x(), this.get_size().get_y());
-      }
-    }
-    });
-    var tmp$5 = Kotlin.createClass(tmp$4, {initialize:function(pos, imageSrc){
-      this.super_init(pos, imageSrc);
-      this.$isFlashingAtTheMoment = false;
-      this.$updatesSinceLastStateChange = 0;
-    }
-    , get_isFlashingAtTheMoment:function(){
-      return this.$isFlashingAtTheMoment;
-    }
-    , set_isFlashingAtTheMoment:function(tmp$0){
-      this.$isFlashingAtTheMoment = tmp$0;
-    }
-    , get_updatesSinceLastStateChange:function(){
-      return this.$updatesSinceLastStateChange;
-    }
-    , set_updatesSinceLastStateChange:function(tmp$0){
-      this.$updatesSinceLastStateChange = tmp$0;
-    }
-    , draw:function(state){
-      {
-        if (!this.get_isFlashingAtTheMoment()) {
-          this.drawImage(state, this.get_image());
-        }
-        this.updateFlashes();
-      }
-    }
-    , updateFlashes:function(){
-      {
-        if (this.get_updatesSinceLastStateChange() > 6) {
-          this.set_isFlashingAtTheMoment(!this.get_isFlashingAtTheMoment());
-          this.set_updatesSinceLastStateChange(0);
-        }
-         else {
-          var tmp$0;
-          var tmp$1;
-          tmp$0 = this.get_updatesSinceLastStateChange() , (tmp$1 = tmp$0 , (this.set_updatesSinceLastStateChange(tmp$0 + 1) , tmp$1));
-        }
-      }
-    }
-    });
-    var tmp$6 = Kotlin.createClass(tmp$1, {initialize:function(pos){
-      this.$pos = pos;
-      this.super_init();
-      this.$timeLeftForChangeColor = 'c';
-      this.$timeStartLastChangeColor = (new Date).getTime();
-      this.$timerLength = 3;
-    }
-    , get_pos:function(){
-      return this.$pos;
-    }
-    , set_pos:function(tmp$0){
-      this.$pos = tmp$0;
-    }
-    , get_timeLeftForChangeColor:function(){
-      return this.$timeLeftForChangeColor;
-    }
-    , set_timeLeftForChangeColor:function(tmp$0){
-      this.$timeLeftForChangeColor = tmp$0;
-    }
-    , get_timeStartLastChangeColor:function(){
-      return this.$timeStartLastChangeColor;
-    }
-    , set_timeStartLastChangeColor:function(tmp$0){
-      this.$timeStartLastChangeColor = tmp$0;
-    }
-    , get_timerLength:function(){
-      return this.$timerLength;
-    }
-    , set_timerLength:function(tmp$0){
-      this.$timerLength = tmp$0;
-    }
-    , draw:function(state){
-      {
-        this.set_timeLeftForChangeColor((this.get_timerLength() - ((new Date).getTime() - this.get_timeStartLastChangeColor()) / 1000 + ' ').charAt(0));
-        state.get_context().font = 'bold 9px Arial, serif';
-        state.get_context().fillStyle = traffic.get_Colors().get_black();
-        state.get_context().fillText(this.get_timeLeftForChangeColor(), this.get_pos().get_x(), this.get_pos().get_y());
-      }
-    }
-    , resetTimer:function(){
-      {
-        this.set_timeStartLastChangeColor((new Date).getTime());
-        this.set_timerLength(10);
-      }
-    }
-    });
-    var tmp$7 = Kotlin.createClass(tmp$1, {initialize:function(src, pos, imageSize){
+    var tmp$5 = Kotlin.createClass(tmp$1, {initialize:function(src, pos, imageSize){
       this.$src = src;
       this.$pos = pos;
       this.$imageSize = imageSize;
@@ -381,7 +283,7 @@
       }
     }
     });
-    var tmp$8 = Kotlin.createClass(tmp$1, {initialize:function(pos, direction, startColor){
+    var tmp$6 = Kotlin.createClass(tmp$1, {initialize:function(pos, direction, startColor){
       this.$pos = pos;
       this.$direction = direction;
       this.$startColor = startColor;
@@ -542,7 +444,7 @@
       }
     }
     });
-    var tmp$9 = Kotlin.createClass(tmp$1, {initialize:function(src, pos, size, isHorizontal){
+    var tmp$7 = Kotlin.createClass(tmp$1, {initialize:function(src, pos, size, isHorizontal){
       this.$src = src;
       this.$pos = pos;
       this.$size = size;
@@ -642,18 +544,69 @@
       }
     }
     });
-    var tmp$10 = Kotlin.createClass(tmp$1, {initialize:function(pos){
+    var tmp$8 = Kotlin.createClass(tmp$1, {initialize:function(pos){
       this.$pos = pos;
       this.super_init();
-      this.$relSize = 0.8;
-      this.$imageSize = traffic.v(420, 323);
-      this.$size = this.get_imageSize().times(this.get_relSize());
+      this.$timeLeftForChangeColor = 'c';
+      this.$timeStartLastChangeColor = (new Date).getTime();
+      this.$timerLength = 3;
     }
     , get_pos:function(){
       return this.$pos;
     }
     , set_pos:function(tmp$0){
       this.$pos = tmp$0;
+    }
+    , get_timeLeftForChangeColor:function(){
+      return this.$timeLeftForChangeColor;
+    }
+    , set_timeLeftForChangeColor:function(tmp$0){
+      this.$timeLeftForChangeColor = tmp$0;
+    }
+    , get_timeStartLastChangeColor:function(){
+      return this.$timeStartLastChangeColor;
+    }
+    , set_timeStartLastChangeColor:function(tmp$0){
+      this.$timeStartLastChangeColor = tmp$0;
+    }
+    , get_timerLength:function(){
+      return this.$timerLength;
+    }
+    , set_timerLength:function(tmp$0){
+      this.$timerLength = tmp$0;
+    }
+    , draw:function(state){
+      {
+        this.set_timeLeftForChangeColor((this.get_timerLength() - ((new Date).getTime() - this.get_timeStartLastChangeColor()) / 1000 + ' ').charAt(0));
+        state.get_context().font = 'bold 9px Arial, serif';
+        state.get_context().fillStyle = traffic.get_Colors().get_black();
+        state.get_context().fillText(this.get_timeLeftForChangeColor(), this.get_pos().get_x(), this.get_pos().get_y());
+      }
+    }
+    , resetTimer:function(){
+      {
+        this.set_timeStartLastChangeColor((new Date).getTime());
+        this.set_timerLength(10);
+      }
+    }
+    });
+    var tmp$9 = Kotlin.createClass(tmp$1, {initialize:function(pos, imageSrc){
+      this.$pos = pos;
+      this.$imageSrc = imageSrc;
+      this.super_init();
+      this.$relSize = 0.5;
+      this.$imageSize = traffic.v(33, 33);
+      this.$size = this.get_imageSize().times(this.get_relSize());
+      this.$image = traffic.loadImage(this.get_imageSrc());
+    }
+    , get_pos:function(){
+      return this.$pos;
+    }
+    , set_pos:function(tmp$0){
+      this.$pos = tmp$0;
+    }
+    , get_imageSrc:function(){
+      return this.$imageSrc;
     }
     , get_relSize:function(){
       return this.$relSize;
@@ -664,9 +617,56 @@
     , get_size:function(){
       return this.$size;
     }
+    , get_image:function(){
+      return this.$image;
+    }
     , draw:function(state){
       {
-        state.get_context().drawImage(traffic.loadImage(traffic.get_PATH_TO_IMAGES() + 'crossroads.jpg'), 0, 0, this.get_imageSize().get_x(), this.get_imageSize().get_y(), this.get_pos().get_x(), this.get_pos().get_y(), this.get_size().get_x(), this.get_size().get_y());
+        this.drawImage(state, this.get_image());
+      }
+    }
+    , drawImage:function(state, image){
+      {
+        state.get_context().drawImage(image, 0, 0, this.get_imageSize().get_x(), this.get_imageSize().get_y(), this.get_pos().get_x(), this.get_pos().get_y(), this.get_size().get_x(), this.get_size().get_y());
+      }
+    }
+    });
+    var tmp$10 = Kotlin.createClass(tmp$9, {initialize:function(pos, imageSrc){
+      this.super_init(pos, imageSrc);
+      this.$isFlashingAtTheMoment = false;
+      this.$updatesSinceLastStateChange = 0;
+    }
+    , get_isFlashingAtTheMoment:function(){
+      return this.$isFlashingAtTheMoment;
+    }
+    , set_isFlashingAtTheMoment:function(tmp$0){
+      this.$isFlashingAtTheMoment = tmp$0;
+    }
+    , get_updatesSinceLastStateChange:function(){
+      return this.$updatesSinceLastStateChange;
+    }
+    , set_updatesSinceLastStateChange:function(tmp$0){
+      this.$updatesSinceLastStateChange = tmp$0;
+    }
+    , draw:function(state){
+      {
+        if (!this.get_isFlashingAtTheMoment()) {
+          this.drawImage(state, this.get_image());
+        }
+        this.updateFlashes();
+      }
+    }
+    , updateFlashes:function(){
+      {
+        if (this.get_updatesSinceLastStateChange() > 6) {
+          this.set_isFlashingAtTheMoment(!this.get_isFlashingAtTheMoment());
+          this.set_updatesSinceLastStateChange(0);
+        }
+         else {
+          var tmp$0;
+          var tmp$1;
+          tmp$0 = this.get_updatesSinceLastStateChange() , (tmp$1 = tmp$0 , (this.set_updatesSinceLastStateChange(tmp$0 + 1) , tmp$1));
+        }
       }
     }
     });
@@ -844,7 +844,7 @@
       }
     }
     });
-    return {Button:tmp$9, FlashingTrafficLightItem:tmp$5, Timer:tmp$6, Controls:tmp$7, TrafficLight:tmp$8, Shape:tmp$1, Car:tmp$2, Border:tmp$3, TrafficLightItem:tmp$4, CanvasState:tmp$11, Map:tmp$10, Vector:tmp$0};
+    return {TrafficLightItem:tmp$9, Controls:tmp$5, TrafficLight:tmp$6, Button:tmp$7, Timer:tmp$8, Shape:tmp$1, Map:tmp$2, Border:tmp$3, Car:tmp$4, CanvasState:tmp$11, FlashingTrafficLightItem:tmp$10, Vector:tmp$0};
   }
   ();
   var kotlin = Kotlin.createNamespace({initialize:function(){
@@ -928,7 +928,7 @@
       return new traffic.Vector(x, y);
     }
   }
-  }, {CanvasState:classes.CanvasState, Map:classes.Map, Button:classes.Button, Shape:classes.Shape, TrafficLight:classes.TrafficLight, Controls:classes.Controls, Timer:classes.Timer, TrafficLightItem:classes.TrafficLightItem, FlashingTrafficLightItem:classes.FlashingTrafficLightItem, Border:classes.Border, Vector:classes.Vector, Car:classes.Car});
+  }, {TrafficLightItem:classes.TrafficLightItem, Timer:classes.Timer, CanvasState:classes.CanvasState, FlashingTrafficLightItem:classes.FlashingTrafficLightItem, Button:classes.Button, TrafficLight:classes.TrafficLight, Shape:classes.Shape, Controls:classes.Controls, Car:classes.Car, Border:classes.Border, Vector:classes.Vector, Map:classes.Map});
   Kotlin.defs.traffic = traffic;
   kotlin.initialize();
   traffic.initialize();
