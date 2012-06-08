@@ -42,8 +42,8 @@ class CanvasState(val canvas: HTMLCanvasElement) {
         addShape(Car(v(0.0, 142.0), "right", "black"))
         addShape(Border())
         addShape(Image(PATH_TO_IMAGES + "controls.png", v(380.0, 10.0), v(190.0, 56.0)))
-        addShape(Button(PATH_TO_IMAGES + "lr.png", v(420.0, 70.0), v(120.0, 50.0)))
-        addShape(Button(PATH_TO_IMAGES + "ud.png", v(455.0, 120.0), v(50.0, 120.0)))
+        addShape(Button(src = PATH_TO_IMAGES + "lr.png", pos = v(420.0, 70.0), size = v(120.0, 50.0), isHorizontal = true))
+        addShape(Button(src = PATH_TO_IMAGES + "ud.png", pos = v(455.0, 120.0), size = v(50.0, 120.0), isHorizontal = false))
     }
 
     fun startDrawing() {
