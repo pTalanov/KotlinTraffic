@@ -2,8 +2,8 @@
   <configuration default="false" name="Chrome" type="K2JSConfigurationType" factoryName="Kotlin (JavaScript)">
     <K2JSConfigurationSettings>
       <option name="browserFamily" value="CHROME" />
-      <option name="generatedFilePath" value="$PROJECT_DIR$" />
-      <option name="pageToOpenFilePath" value="$PROJECT_DIR$/index.html" />
+      <option name="generatedFilePath" value="$PROJECT_DIR$/production/js" />
+      <option name="pageToOpenFilePath" value="$PROJECT_DIR$/production/index.html" />
       <option name="shouldOpenInBrowserAfterTranslation" value="true" />
     </K2JSConfigurationSettings>
     <RunnerSettings RunnerId="K2JSBrowserRunner" />
